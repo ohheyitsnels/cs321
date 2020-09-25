@@ -1,4 +1,3 @@
-package com.company;
 import java.util.LinkedList;
 
 public class SecondLevelCache<T> {
@@ -55,17 +54,24 @@ public class SecondLevelCache<T> {
     }
 
     public void addObject(T object){
-        if (getObject(object) != null) {
-            if (list.size() >= maxSize1) {
+        removeObject(object);
+        if (list.size() >= maxSize1) {
                 list.removeLast();
-            }
-            list.addFirst(object);
         }
+        if (list2.size() >= maxSize2) {
+            list2.removeLast();
+        }
+        list.addFirst(object);
+        list2.addFirst(object);
     }
 
     public void removeObject(T object){
-        T foundObject = getObject(object);
-        list.remove(foundObject);
+        if (list.contains(object)) {
+            list.remove(object);
+        }
+        if (list2.contains(object)) {
+            list2.remove(object);
+        }
     }
 
     public void clearCache(){

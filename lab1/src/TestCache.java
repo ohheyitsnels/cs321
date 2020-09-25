@@ -1,5 +1,3 @@
-package com.company;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -10,15 +8,12 @@ public class TestCache {
         File file = new File(cacheSource);
 
         try {
-            int hits = 0;
-            int refs = 0;
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
-                refs++;
-                if (cache.getObject(scanner.next()) != null) {
-                    hits++;
-                }
+                cache.getObject(scanner.next());
             }
+            int hits = cache.getHits();
+            int refs = cache.getRefs();
             System.out.println(hits + " hits\n" + refs + " refs");
             System.out.println("HR of " + (double)hits/refs);
         } catch (FileNotFoundException e) {
@@ -36,8 +31,7 @@ public class TestCache {
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
-                if (cache.getObject(scanner.next()) != null) {
-                }
+                cache.getObject(scanner.next());
             }
             int hits1 = cache.getHits1();
             int hits2 = cache.getHits2();
